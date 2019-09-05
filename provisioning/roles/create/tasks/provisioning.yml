@@ -7,8 +7,28 @@
     profile: "{{ profile }}"
     rules:
     - proto: tcp
-      from_port: 22
-      to_port: 22
+      ports: 
+        - 22
+      rule_desc: SSH
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      ports:
+        - 6443
+        - 2379-2380
+        - 10250-10252
+        - 10255
+        - 30000-32767
+      rule_desc: K8s Ports
+      cidr_ip: 0.0.0.0/0
+    - proto: tcp
+      ports:
+        - 6783
+      rule_desc: WeaveNet
+      cidr_ip: 0.0.0.0/0
+    - proto: udp
+      ports:
+        - 6783-6784
+      rule_desc: WeaveNet
       cidr_ip: 0.0.0.0/0
     rules_egress:
     - proto: all
