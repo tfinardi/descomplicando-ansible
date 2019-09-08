@@ -1,6 +1,7 @@
 - name: Get instances list
   ec2_instance_facts:
     region: "{{ region }}"
+    profile: "{{ profile }}"
     filters:
       "tag:Name": "{{ ec2_tag_name }}"
       instance-state-name: "{{ ec2_state }}"
@@ -9,6 +10,7 @@
 - name: Terminate EC2 server
   ec2:
     region: "{{ region }}"
+    profile: "{{ profile }}"
     instance_ids: "{{ item.instance_id }}"
     state: 'absent'
     wait: True
@@ -17,6 +19,7 @@
 - name: Gather security group facts
   ec2_group_facts:
     region: "{{ region }}"
+    profile: "{{ profile }}"
     filters:
       group_name: "{{ security_group }}"    
   register: sg_list
@@ -24,6 +27,7 @@
 - name: "Delete group by its id"
   ec2_group:
     region: "{{ region }}"
+    profile: "{{ profile }}"
     group_id: "{{ item.group_id }}"
     state: absent
   with_items: "{{ sg_list.security_groups }}"
