@@ -2,12 +2,6 @@
 localhost ansible_connection=local ansible_python_interpreter=python gather_facts=false
 
 [ip-publico]
-3.87.250.168
-54.210.245.183
-3.88.52.124
 
 [ip-privado]
-172.31.34.30
-172.31.45.133
-172.31.47.110
 

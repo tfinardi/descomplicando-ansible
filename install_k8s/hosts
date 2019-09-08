@@ -1,12 +1,10 @@
 [k8s-master]
-3.90.28.49 ansible_python_interpreter=/usr/bin/python3
+%%MASTER%% ansible_python_interpreter=/usr/bin/python3
 
 [k8s-workers]
-54.164.188.94
-54.196.112.77
 
 [k8s-workers:vars]
 ansible_python_interpreter=/usr/bin/python3
-K8S_MASTER_NODE_IP=172.31.32.162
+K8S_MASTER_NODE_IP=%%MASTER_LAN%%
 K8S_API_SECURE_PORT=6443
 
