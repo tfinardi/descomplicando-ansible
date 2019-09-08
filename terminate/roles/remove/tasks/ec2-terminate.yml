@@ -1,0 +1,29 @@
+- name: Get instances list
+  ec2_instance_facts:
+    region: "{{ region }}"
+    filters:
+      "tag:Name": "{{ ec2_tag_name }}"
+      instance-state-name: "{{ ec2_state }}"
+  register: ec2_list
+
+- name: Terminate EC2 server
+  ec2:
+    region: "{{ region }}"
+    instance_ids: "{{ item.instance_id }}"
+    state: 'absent'
+    wait: True
+  with_items: "{{ ec2_list.instances }}"
+
+- name: Gather security group facts
+  ec2_group_facts:
+    region: "{{ region }}"
+    filters:
+      group_name: "{{ security_group }}"    
+  register: sg_list
+
+- name: "Delete group by its id"
+  ec2_group:
+    region: "{{ region }}"
+    group_id: "{{ item.group_id }}"
+    state: absent
+  with_items: "{{ sg_list.security_groups }}"

@@ -1,0 +1,8 @@
+---
+# vars file for remove EC2
+security_group: giropops
+keypair: descomplicando-ansible
+region: us-east-1
+profile: giropops
+ec2_tag_name: Finardi-Cloud-k8s
+ec2_state: running

@@ -1,0 +1,3 @@
+---
+# tasks file for remove
+- include: ec2-terminate.yml
