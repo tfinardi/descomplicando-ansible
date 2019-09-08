@@ -47,8 +47,6 @@
     count={{ count }}
   register: ec2
 
-- debug: msg={{ ec2.instances[0].private_ip }}
-
 - name: Adicionando a instancia ao inventario temp
   add_host: name={{ item.public_ip }} groups=giropops-new
   with_items: "{{ ec2.instances }}"
@@ -67,13 +65,6 @@
     insertafter="ip-privado" line={{ item.private_ip }}
   with_items: "{{ ec2.instances }}"
 
-- name: Adicionando o ip do host Master
-  local_action: lineinfile
-    dest="./hosts2"
-    regexp='K8S_MASTER_NODE_IP'
-    line="K8S_MASTER_NODE_IP={{ item.private_ip }}"  
-  with_items: "{{ ec2.instances }}"
-
 - name: Esperando o SSH
   local_action: wait_for
     host={{ item.public_ip }}
@@ -86,7 +77,7 @@
   with_items: "{{ ec2.instances }}"
   args:
     tags:
-      Name: Finardi-Cloud-k8s
+      Name: "{{ ec2_tag_name }}"
 
 - name: Adicionando a maquina criada no known_hosts
   shell: ssh-keyscan -H {{ item.public_ip }} >> ~/.ssh/known_hosts

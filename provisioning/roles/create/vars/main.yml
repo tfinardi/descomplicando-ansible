@@ -7,3 +7,4 @@ keypair: descomplicando-ansible
 region: us-east-1
 count: 3
 profile: giropops
+ec2_tag_name: Finardi-Cloud-k8s
